@@ -28,7 +28,7 @@ I plan to evolve ZenGarden into a full-suite mindfulness tool by adding:
 ##  Setup & Installation
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/yourusername/ZenGarden.git](https://github.com/yourusername/ZenGarden.git)
+    git clone (https://github.com/krishpusa-prog/ZenGarden.git)
     ```
 2.  **Get your API Keys:**
     * Sign up at [Unsplash Developers](https://unsplash.com/developers).
