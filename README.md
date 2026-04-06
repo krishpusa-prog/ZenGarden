@@ -1,42 +1,34 @@
-# ZenGarden
-**A minimalist mental health dashboard for focus and serenity.**
+# ZenGarden 🎋
+**A premium, aesthetic Pomodoro timer for focus and serenity.**
 
-ZenGarden is a web-based sanctuary designed to help users start their day with intention. By combining aesthetic visuals, wisdom from Zen masters, and a singular focus, it aims to reduce digital clutter and mental fatigue.
+ZenGarden is a minimalist, web-based sanctuary designed to help you find focus through a beautiful, distraction-free Pomodoro timer and mindfulness tools. It combines stunning visuals, daily wisdom, and a centered experience to help you stay productive while maintaining inner peace.
 
-##  Features
-* **Dynamic Serenity:** Integration with the **Unsplash API** to provide high-quality, nature-inspired backgrounds every time you open the app.
-* **Daily Wisdom:** Fetching inspirational quotes via the **ZenQuotes API** to provide a mindful start to your day.
-* **The "Focus Task":** A simple, distraction-free input for your most important task of the day.
-* **Minimalist UI:** Built with clean HTML and CSS to ensure the user stays calm and focused.
+## ✨ Features
+- **Centered Pomodoro Timer**: A prominent, aesthetic timer with customizable focus sessions (5m, 25m, 50m) and browser tab notifications.
+- **Premium Aesthetic**: Modern minimalist design featuring **glassmorphism** effects, elegant typography (Inter), and smooth micro-animations.
+- **Dynamic Serenity**: Integration with the **Unsplash API** to provide high-quality, nature-inspired backgrounds every time you open the app or toggle the theme.
+- **Mindfulness Tools**:
+  - **Guided Breathing**: A visual box-breathing guide to help you center yourself.
+  - **Zen Music**: A built-in ambient music player for a calming background atmosphere.
+- **Daily Wisdom**: Real-time inspirational quotes via the **ZenQuotes API**.
+- **The "Focus Task"**: A simple, integrated todo list to keep your daily goals in sight.
 
-##  Tech Stack
-* **Frontend:** HTML5, CSS3, JavaScript (ES6+)
-* **APIs:** * [Unsplash API](https://unsplash.com/developers) (Visuals)
-    * [ZenQuotes API](https://docs.zenquotes.io/zenquotes-documentation/) (Daily Quotes)
+## 🛠️ Tech Stack
+- **Frontend**: HTML5, CSS3 (Vanilla), JavaScript (ES6+)
+- **APIs**:
+  - [Unsplash API](https://unsplash.com/developers) (Dynamic Visuals)
+  - [ZenQuotes API](https://docs.zenquotes.io/zenquotes-documentation/) (Daily Wisdom)
 
----
-
-## Future Roadmap
-I plan to evolve ZenGarden into a full-suite mindfulness tool by adding:
-- [ ] **Breathing Exercises:** Guided visual animations for box breathing.
-- [ ] **Pomodoro Timer:** A customizable timer to balance work and rest.
-- [ ] **Zen Music:** An embedded lo-fi or nature sounds player.
-- [ ] **Journaling:** A simple daily log to track emotional well-being.
-
----
-
-##  Setup & Installation
-1.  **Clone the repository:**
-    ```bash
-    git clone (https://github.com/krishpusa-prog/ZenGarden.git)
-    ```
-2.  **Get your API Keys:**
-    * Sign up at [Unsplash Developers](https://unsplash.com/developers).
-    * Create a new application to get your `Access Key`.
-3.  **Launch:**
-    * Open `index.html` in your browser.
+## 🚀 Setup & Installation
+1. **Clone the repository:**
+   ```bash
+   git clone (https://github.com/krishpusa-prog/ZenGarden.git)
+   ```
+2. **Launch:**
+   - Open `index.html` in your browser.
+   - *Note: For the best experience (and to avoid CORS issues with some APIs), consider serving the directory using a local server (e.g., `npx http-server`).*
 
 ---
 
-## Developer
-**Kaustubh Kashyap** 
+## 👨‍💻 Developer
+**Kaustubh Kashyap**
