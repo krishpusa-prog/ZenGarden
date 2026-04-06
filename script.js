@@ -1,18 +1,15 @@
-
-
 const UNSPLASH_KEY = 'CWE3neCUMpKmo1H5y5Of87l5xoVYucP2_fJ72F0NOGo';
 
+// 1. Fetch Dynamic Zen Content
 async function getZenContent() {
   const loader = document.getElementById('loader');
   try {
-    // 1. Fetch Background from Unsplash
-    const imgRes = await fetch(`https://api.unsplash.com/photos/random?query=nature,zen&client_id=${UNSPLASH_KEY}`);
+    // Fetch Background from Unsplash
+    const imgRes = await fetch(`https://api.unsplash.com/photos/random?query=nature,minimalist,zen&client_id=${UNSPLASH_KEY}`);
     const imgData = await imgRes.json();
-    document.body.style.backgroundImage = `url('${imgData.urls.regular}')`;
+    document.body.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('${imgData.urls.regular}')`;
 
-
-    // 2. Fetch Quote from ZenQuotes (Using 'today' mode)
-    // Note: If you face CORS issues, use a proxy or their specific 'today' endpoint
+    // Fetch Quote from ZenQuotes (Using 'today' mode)
     const quoteRes = await fetch('https://api.zenquotes.io/api/today');
     const quoteData = await quoteRes.json();
     
@@ -21,133 +18,169 @@ async function getZenContent() {
     
   } catch (error) {
     console.error("ZenGarden Error:", error);
-    
     document.getElementById('text').innerText = "You are enough. Focus on the present moment.";
     document.getElementById('author').innerText = "- Zen Proverb";
-  }finally {
+  } finally {
     setTimeout(() => {
       loader.classList.add('fade-out');
     }, 1000);
-}}
-
-//To-do list
-function todo(){
-  const todoList=document.getElementById('todo');
-  const todoItem=document.getElementById('todoInput');
-  const todoButton=document.getElementById("todoButton");
-  todoButton.addEventListener('click',function(){
-    const textValue=todoItem.value;
-    if(textValue.trim()!==''){
-      const listItem=document.createElement('li');
-      listItem.textContent=textValue;
-      todoList.appendChild(listItem);
-      
-    }
-    todoItem.value='';
-    todoItem.add.classList('disabled')
-  })
-
-}
-//sidebar
-function setupPanel() {
-  const sidebarIcon = document.getElementById('pomodoro-icon'); // The icon in the thin strip
-  const panel = document.getElementById('features-panel');
-
-  sidebarIcon.addEventListener('click', (e) => {
-    e.stopPropagation(); // Prevents clicks from bubbling up
-    panel.classList.add('active');
-    console.log("Sidebar opened, timer NOT started.");
-  });
+  }
 }
 
-//pomodor logic
+// 2. Pomodoro Logic
 let timerInterval;
 let timeLeft = 25 * 60;
-let isBreak = false;
-
-// Function to allow user to pick time
-function setTimer(minutes) {
-  clearInterval(timerInterval);
-  timeLeft = minutes * 60;
-  document.getElementById('start-timer').innerText = 'Start';
-  updateDisplay();
-}
+let isRunning = false;
 
 function updateDisplay() {
   const timerDisplay = document.getElementById('timer-display');
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
   timerDisplay.innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  document.title = `${minutes}:${seconds < 10 ? '0' : ''}${seconds} - ZenTimer`;
 }
 
-function initPomodoro() {
-  const modal = document.getElementById('pomodoro-modal');
-  const startBtn = document.getElementById('start-timer');
-  const resetBtn = document.getElementById('reset-timer');
-  const closeModal = document.querySelector('.close-modal');
+function setTimer(minutes) {
+  stopTimer();
+  timeLeft = minutes * 60;
+  updateDisplay();
+}
 
-  document.getElementById('open-timer-btn').addEventListener('click', () => modal.classList.add('active'));
-  closeModal.addEventListener('click', () => modal.classList.remove('active'));
+function startTimer() {
+  if (isRunning) return;
+  isRunning = true;
+  document.getElementById('start-timer').innerText = 'Pause';
+  
+  timerInterval = setInterval(() => {
+    if (timeLeft <= 0) {
+      document.getElementById('zen-bell').play();
+      stopTimer();
+      alert("Time to rest and breathe.");
+      return;
+    }
+    timeLeft--;
+    updateDisplay();
+  }, 1000);
+}
 
-  startBtn.addEventListener('click', () => {
-    if (startBtn.innerText === 'Start') {
-      startBtn.innerText = 'Pause';
-      timerInterval = setInterval(() => {
-        if (timeLeft <= 0) {
-          document.getElementById('zen-bell').play();
-          clearInterval(timerInterval);
-          alert("Session Finished!");
-          return;
-        }
-        timeLeft--;
-        updateDisplay();
-      }, 1000);
-    } else {
-      startBtn.innerText = 'Start';
-      clearInterval(timerInterval);
+function stopTimer() {
+  isRunning = false;
+  clearInterval(timerInterval);
+  document.getElementById('start-timer').innerText = 'Start';
+}
+
+function toggleTimer() {
+  if (isRunning) stopTimer();
+  else startTimer();
+}
+
+function resetTimer() {
+  stopTimer();
+  timeLeft = 25 * 60;
+  updateDisplay();
+}
+
+// 3. Todo List Logic
+function initTodo() {
+  const todoList = document.getElementById('todo');
+  const todoInput = document.getElementById('todoInput');
+  const todoButton = document.getElementById("todoButton");
+
+  todoButton.addEventListener('click', () => {
+    const text = todoInput.value.trim();
+    if (text) {
+      const li = document.createElement('li');
+      li.innerHTML = `
+        <span>${text}</span>
+        <button class="delete-btn" style="background:none; border:none; color:rgba(255,255,255,0.5); cursor:pointer;">×</button>
+      `;
+      li.querySelector('.delete-btn').onclick = () => li.remove();
+      todoList.appendChild(li);
+      todoInput.value = '';
     }
   });
 
-  resetBtn.addEventListener('click', () => {
-    clearInterval(timerInterval);
-    timeLeft = 25 * 60;
-    updateDisplay();
-    startBtn.innerText = 'Start';
+  todoInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') todoButton.click();
   });
 }
 
+// 4. Panel & Tools Logic
 function setupPanel() {
   const panel = document.getElementById('features-panel');
-  document.getElementById('sidebar-trigger').addEventListener('click', () => panel.classList.add('active'));
-  document.getElementById('close-panel').addEventListener('click', () => panel.classList.remove('active'));
+  const trigger = document.getElementById('sidebar-trigger');
+  const close = document.getElementById('close-panel');
+
+  trigger.addEventListener('click', () => panel.classList.add('active'));
+  close.addEventListener('click', () => panel.classList.remove('active'));
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!panel.contains(e.target) && !trigger.contains(e.target)) {
+      panel.classList.remove('active');
+    }
+  });
 }
 
 function initMindfulnessTools() {
-  // Breathing
+  // Breathing Tool
   const breathModal = document.getElementById('breathing-modal');
-  document.getElementById('open-breathing').addEventListener('click', () => breathModal.classList.add('active'));
-  document.querySelector('.close-breathing').addEventListener('click', () => breathModal.classList.remove('active'));
+  const breathText = document.getElementById('breath-text');
+  
+  document.getElementById('open-breathing').addEventListener('click', () => {
+    breathModal.classList.add('active');
+    startBreathingGuide();
+  });
 
-  // Music (Now global)
+  const closeBreathing = document.querySelector('.close-breathing');
+  closeBreathing.addEventListener('click', () => {
+    breathModal.classList.remove('active');
+    clearInterval(breathInterval);
+  });
+
+  let breathInterval;
+  function startBreathingGuide() {
+    let phase = 0; // 0: Inhale, 1: Hold, 2: Exhale
+    const phases = ["Inhale deeply...", "Hold briefly...", "Exhale slowly..."];
+    
+    breathText.innerText = phases[0];
+    breathInterval = setInterval(() => {
+      phase = (phase + 1) % 3;
+      breathText.innerText = phases[phase];
+    }, 4000);
+  }
+
+  // Music Tool
   const musicBtn = document.getElementById('play-pause-music');
   const audio = document.getElementById('bg-music');
   musicBtn.addEventListener('click', () => {
-    if (audio.paused) { audio.play(); musicBtn.innerText = "Pause"; }
-    else { audio.pause(); musicBtn.innerText = "Play"; }
+    if (audio.paused) {
+      audio.play();
+      musicBtn.innerText = "Pause";
+    } else {
+      audio.pause();
+      musicBtn.innerText = "Play";
+    }
   });
 
-  // Theme Toggle
-  document.getElementById('theme-toggle').addEventListener('click', () => {
-    document.body.classList.toggle('light-theme');
+  // Theme Toggle (Quick Background Change)
+  document.getElementById('theme-toggle').addEventListener('click', async () => {
+    const loader = document.getElementById('loader');
+    loader.classList.remove('fade-out');
+    await getZenContent();
+    loader.classList.add('fade-out');
   });
 }
 
-// Run on load
-window.addEventListener('DOMContentLoaded', ()=>{
+// Global initialization
+window.addEventListener('DOMContentLoaded', () => {
   getZenContent();
-  todo();
+  initTodo();
   setupPanel();
-  initPomodoro();
   initMindfulnessTools();
+  
+  // Attach timer listeners
+  document.getElementById('start-timer').addEventListener('click', toggleTimer);
+  document.getElementById('reset-timer').addEventListener('click', resetTimer);
+  updateDisplay();
 });
-
