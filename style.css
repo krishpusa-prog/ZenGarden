@@ -1,13 +1,27 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing: border-box;
+}
 body {
   margin: 0;
   height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image: url(assests/Default\ background.jpg);
   background-color: #2c3e50; /* Fallback */
   background-size: cover;
   background-position: center;
   transition: background-image 0.8s ease-in-out;
+  z-index: 1;
+}
+input{
+  background-color: #2c3e50;
+  color: white;
+  border-radius: 5px;
+  width: 50%;
+  text-align: center;
 }
 
 .dashboard {
@@ -16,6 +30,308 @@ body {
   padding: 20px;
   text-align: center;
   background: rgba(255, 255, 255, 0.1);
+  /* background-image: url(assests/\ -8.jpg); */
   backdrop-filter: blur(10px); /* Modern Zen feel */
+   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 15px;
+  z-index: 1;
+}
+
+#loader{
+  position:fixed;
+  background-image: url('assests/loader.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#loading-icon{
+  height: 20px;
+  width: 20px;
+  background-image: "assests/narcissus (1).png";
+}
+#loading-icon > img{
+  height: 40px;
+  width: 40px;
+  position: relative;
+  left: 46px;
+  bottom:50px;
+  border-radius: 50%;
+  animation: shadow-pulse 1s infinite, rotate 2s infinite;
+}
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  pointer-events: none; 
+  display: hidden;
+}
+.features-container{
+  position:fixed;
+  left:0;
+  height: 90%;
+  width: 10%;
+  background-color: rgb(0, 0, 0);
+  margin: 20px;
+  border-radius: 20px;
+
+}
+.pomodoro{
+  height: 100px;
+  width: 100px;
+
+}
+#pomodoro-icon{
+  background-image: url(assests/lotus.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: rgb(255, 255, 255);
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  
+}
+/* The thin sidebar on the left */
+.features-sidebar {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 60px;
+  height: auto;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  border-radius: 0 20px 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 0;
+  z-index: 100;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.features-sidebar:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+/* The actual panel that opens */
+.features-panel {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  width: 300px; /* Width of the popup */
+  background: rgba(20, 20, 20, 0.4);
+  backdrop-filter: blur(15px);
+  z-index: 101;
+  padding: 40px 20px;
+  color: white;
+  /* This hides it to the left */
+  transform: translateX(-100%);
+  transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+  margin: 10px 0px;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+
+/* Class to trigger the slide-in */
+.features-panel.active {
+  transform: translateX(0);
+}
+
+#close-panel {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.tools-grid {
+  margin-top: 50px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Style your tree icon here */
+#pomodoro-icon {
+  background-image: url('assests/tree.png');
+  background-size: cover;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+}
+#to-do{
+  position: fixed;
+  right: 20px;
+  bottom: 10px;
+  height:400px;
+  width: 300px;
+  background-color: aliceblue;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1)
+}
+#to-do h1{
+  position: fixed;
+  top:5px;
+}
+/* //pomodor timer */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 2000; /* Above everything */
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  padding: 40px;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+  color: white;
+  width: 300px;
+}
+
+#timer-display {
+  font-size: 4rem;
+  font-weight: bold;
+  margin: 20px 0;
+  font-family: monospace;
+}
+
+.timer-controls button {
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  background: #A8D5BA; /* Sage Green */
+  color: #2c3e50;
+  font-weight: bold;
+}
+/* Add a glow to the tree icon when the timer is running */
+.timer-running #pomodoro-icon {
+  box-shadow: 0 0 15px #A8D5BA;
+  border: 2px solid white;
+}
+
+/* Breathing Visuals */
+.breath-container {
+  position: relative;
+  height: 200px;
+  width: 200px;
+  margin: 30px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circle-visual {
+  height: 100px;
+  width: 100px;
+  background: rgba(168, 213, 186, 0.6); /* Sage Green */
+  border-radius: 50%;
+  animation: breath-cycle 8s infinite ease-in-out;
+}
+
+.circle-outline {
+  position: absolute;
+  height: 180px;
+  width: 180px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+/* Top Right Music */
+#top-right-music {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 10px 15px;
+  border-radius: 10px;
+  z-index: 500;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Theme Classes */
+body.light-theme {
+  background-color: #f0f0f0;
+  color: #2c3e50;
+}
+body.light-theme .dashboard, body.light-theme .modal-content {
+  background: rgba(0, 0, 0, 0.05);
+  color: #2c3e50;
+  border-color: rgba(0,0,0,0.1);
+}
+
+/* Timer Options Styling */
+.timer-options button {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 2px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#theme-toggle {
+  margin-top: 30px;
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 10px;
+  border: none;
+  background: #A8D5BA;
+}
+
+@keyframes breath-cycle {
+  0%, 100% { transform: scale(1); } /* Exhale/Pause */
+  50% { transform: scale(1.8); }    /* Inhale */
+}
+ @keyframes shadow-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+  }
+  70% {
+    box-shadow: 0px 0px 0 10px rgba(0, 123, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 123, 255, 0);
+  }
+}
+
+@keyframes rotate {
+  0%{
+    rotate: 0deg;
+  }
+  100%{
+    rotate:360deg;
+  }
+  
 }

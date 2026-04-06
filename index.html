@@ -9,16 +9,115 @@
 
 
 <body id="zen-body">
+
+  <!-- loadingscreen -->
+  <div id="loader">
+    <div id="loading-icon"><img src="assests/narcissus (1).png" alt=""></div>
+    <p>Finding peace...</p>
+  </div>
+
+  <!-- todo list -->
+  <div id="to-do">
+    <h1 >Focus today</h1>
+      <ul id="todo"></ul>
+      </div>
+
+  <!-- features -->
+  <!-- <div class="features-container"> -->
+    <!-- pomodoro -->
+     <!-- <div class="pomodoro"></div>
+     <div id="pomodoro-icon"></div> -->
+    
+    <!-- </div> -->
+<div class="features-sidebar" id="sidebar-trigger">
+  <div id="pomodoro-icon" title="Open Features"></div>
+  </div>
+
+<div id="top-right-music">
+  <p id="track-name">Zen Music</p>
+  <button id="play-pause-music">Play</button>
+  <audio id="bg-music" loop src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+</div>
+
+<div class="features-panel" id="features-panel">
+  <button id="close-panel">×</button>
+  <h2>Zen Tools</h2>
+  <div class="tools-grid">
+    <div class="tool-item" id="open-timer-btn">
+      <div class="tool-icon tree-icon"></div>
+      <p>Pomodoro</p>
+    </div>
+    <div class="tool-item" id="open-breathing">
+      <div class="tool-icon breath-icon"></div>
+      <p>Breathe</p>
+    </div>
+  </div>
+  <button id="theme-toggle">Toggle Theme</button>
+</div>
+
+<div id="pomodoro-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h2 id="timer-label">Focus Session</h2>
+    <div class="timer-options">
+      <button onclick="setTimer(5)">5m</button>
+      <button onclick="setTimer(10)">10m</button>
+      <button onclick="setTimer(25)">25m</button>
+      <button onclick="setTimer(60)">60m</button>
+    </div>
+    <div id="timer-display">25:00</div>
+    <div class="timer-controls">
+      <button id="start-timer">Start</button>
+      <button id="reset-timer">Reset</button>
+    </div>
+  </div>
+</div>
+
+
+
+<audio id="bg-music" loop></audio>
+
+<div id="breathing-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-breathing">&times;</span>
+    <h2 id="breath-text">Get Ready...</h2>
+    <div class="breath-container">
+      <div class="circle-visual"></div>
+      <div class="circle-outline"></div>
+    </div>
+  </div>
+</div>
+    </div>
+</div>
+  
+
   <div class="overlay"></div>
   <main class="dashboard">
+    
     <div id="quote-container">
       <p id="text">"Loading your daily wisdom..."</p>
       <p id="author"></p>
     </div>
+
     <div class="focus-section">
-      <input type="text" placeholder="What is your focus today?">
+      <input type="text" id="todoInput" placeholder="What is your focus today?">
+      <button id="todoButton">add focus</button>
     </div>
+
   </main>
+  <!-- pomodoro timer -->
+   <div id="pomodoro-modal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <h2 id="timer-label">Focus Session</h2>
+    <div id="timer-display">25:00</div>
+    <div class="timer-controls">
+      <button id="start-timer">Start</button>
+      <button id="reset-timer">Reset</button>
+    </div>
+  </div>
+</div>
+<audio id="zen-bell" src="https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg"></audio>
 </body>
 <script src="script.js"></script>
 </html>
